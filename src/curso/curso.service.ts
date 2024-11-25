@@ -66,10 +66,16 @@ export class CursoService {
 
   async update(id: string, updateCursoDto: UpdateCursoDto, user: User) {
 
-    //verificar la duplicidad al actualizar, solo viene un campo del dto de actualización
-    const verifyCurso = await this.findOne(id);
-    console.log(updateCursoDto);
-    const { grado, nivel, paralelo, jornada, especialidad } = updateCursoDto;
+    const verifyCurso = await this.findOne(id);    
+    
+    const { 
+      grado        = verifyCurso.grado, 
+      nivel        = verifyCurso.nivel, 
+      paralelo     = verifyCurso.paralelo, 
+      jornada      = verifyCurso.jornada, 
+      especialidad = verifyCurso.especialidad 
+    } = updateCursoDto;
+
     const bdCurso = await this.cursoModel.findOne({ grado, nivel, paralelo, jornada, especialidad });
 
     if( bdCurso ) throw new BadRequestException(`Curso ${grado} ${nivel} ${paralelo} ${jornada} ${especialidad} already exists`);

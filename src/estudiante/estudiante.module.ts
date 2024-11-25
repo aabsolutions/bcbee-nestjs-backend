@@ -5,7 +5,6 @@ import { AuthModule } from 'src/auth/auth.module';
 import { Estudiante, EstudianteSchema } from './schemas/estudiante.schema';
 import { EstudianteController } from './estudiante.controller';
 import { EstudianteService } from './estudiante.service';
-import { CommonModule } from 'src/common/common.module';
 
 @Module({
   controllers: [EstudianteController],

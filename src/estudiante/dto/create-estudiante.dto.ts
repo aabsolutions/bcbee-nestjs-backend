@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsEmail, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsEmail, IsMongoId, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 
 export class CreateEstudianteDto {
 
@@ -52,7 +52,7 @@ export class CreateEstudianteDto {
     img: string;
 
     @ApiProperty()
-    @IsString()
+    @IsMongoId()
     @IsOptional()
     usuario: string;
 

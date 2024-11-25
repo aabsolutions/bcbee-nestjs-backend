@@ -9,6 +9,8 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { LoginUserDto } from './dto';
 
+import { getMenuFrontEnd } from './helpers/menu-frontend.helper';
+
 
 @Injectable()
 export class AuthService {
@@ -53,7 +55,7 @@ export class AuthService {
   async login( loginUserDto: LoginUserDto){
 
     const { password, email } = loginUserDto;
-    const loggedUser = await this.userModel.findOne({ email }, { password: true, email: true});
+    const loggedUser = await this.userModel.findOne({ email }, { password: true, email: true, roles: true});
 
     if( !loggedUser ) 
       throw new UnauthorizedException(`Cretendials are not valid (email)`);
@@ -63,7 +65,8 @@ export class AuthService {
 
     return {
       user: loggedUser,
-      token: this.getJwtToken({ id: loggedUser.id })
+      token: this.getJwtToken({ id: loggedUser.id }),
+      menu: getMenuFrontEnd(loggedUser.roles)
     }
 
   }
