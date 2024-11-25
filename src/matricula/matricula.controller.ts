@@ -23,6 +23,12 @@ export class MatriculaController {
     return this.matriculaService.findAll(paginationDto);
   }
 
+  @Auth()
+  @Get('listado/:id')
+  loadMatriculaCurso( @Param('id') id: string ) {
+    return this.matriculaService.loadMatriculaCurso(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.matriculaService.findOne(id);

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
 import { CreateMatriculaDto } from './dto/create-matricula.dto';
 import { Matricula } from './schemas/matricula.schema';
@@ -21,6 +21,49 @@ export class MatriculaService {
 
     const { limit = 10, offset = 0 } = paginationDto;
     const matriculas = await this.matriculaModel.find({},{},{skip: offset, limit});
+
+    return matriculas;
+
+  }
+
+  async loadMatriculaCurso(id: string) {
+
+    const matriculas = await this.matriculaModel.aggregate([
+      {
+        '$lookup': {
+          'from': 'estudiantes', 
+          'localField': 'estudiante', 
+          'foreignField': '_id', 
+          'as': 'estudiante'
+        }
+      }, {
+        '$unwind': {
+          'path': '$estudiante'
+        }
+      }, {
+        '$match': {
+          '$and': [{
+                      'periodo': "2024-2025",
+                      'curso': new mongoose.Types.ObjectId('6743ff764149521ecba955de')
+                  }]
+        }
+      }, 
+      {
+        '$sort': {
+          'estudiante.apellidos': 1
+        }
+      },
+      {
+          '$project': {
+            'estudiante._id': 1,
+            'estudiante.cedula': 1,
+            'estudiante.apellidos': 1,
+            'estudiante.nombres': 1,
+            'estudiante.f_nac': 1,
+            'estudiante.sexo': 1,
+          }
+      }
+    ]).exec();
 
     return matriculas;
 
@@ -63,7 +106,6 @@ export class MatriculaService {
     }
 
   }
-
 
   async update(id: string, updateMatriculaDto: UpdateMatriculaDto, user: User) {
 
