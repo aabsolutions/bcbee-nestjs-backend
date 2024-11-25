@@ -1,6 +1,7 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+
 import { Auth } from './decorators';
 import { AuthService } from './auth.service';
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -41,7 +42,7 @@ export class AuthController {
 
   @Auth(ValidRoles.admin)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  changeStatus(@Param('id') id: string) {
     return this.authService.activateDesactivate(id);
   }
 }

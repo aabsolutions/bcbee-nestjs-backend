@@ -1,6 +1,6 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { User, UserDocument } from "../entities/user.entity";
+import { User } from "../schemas/user.schema";
 import { ConfigService } from "@nestjs/config";
 import { JwtPayload } from "../interfaces/jwt-payload.interface";
 import { UnauthorizedException } from "@nestjs/common";
@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy ( Strategy ) {
 
     constructor(
         @InjectModel(User.name) 
-        private readonly userModel: Model<UserDocument>,
+        private readonly userModel: Model<User>,
         private readonly configService: ConfigService
     ){
         super({
