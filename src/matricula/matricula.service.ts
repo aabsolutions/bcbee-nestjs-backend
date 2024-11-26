@@ -26,46 +26,73 @@ export class MatriculaService {
 
   }
 
-  async loadMatriculaCurso(id: string) {
+  async loadMatriculaCurso(idCurso: string) {
 
-    const matriculas = await this.matriculaModel.aggregate([
-      {
-        '$lookup': {
-          'from': 'estudiantes', 
-          'localField': 'estudiante', 
-          'foreignField': '_id', 
-          'as': 'estudiante'
-        }
-      }, {
-        '$unwind': {
-          'path': '$estudiante'
-        }
-      }, {
-        '$match': {
-          '$and': [{
-                      'periodo': "2024-2025",
-                      'curso': new mongoose.Types.ObjectId('6743ff764149521ecba955de')
-                  }]
-        }
-      }, 
-      {
-        '$sort': {
-          'estudiante.apellidos': 1
-        }
-      },
-      {
-          '$project': {
-            'estudiante._id': 1,
-            'estudiante.cedula': 1,
-            'estudiante.apellidos': 1,
-            'estudiante.nombres': 1,
-            'estudiante.f_nac': 1,
-            'estudiante.sexo': 1,
+    let periodo_activo = process.env.PERIODO_ACTIVO;
+
+    try {
+      
+      const matriculas = await this.matriculaModel.aggregate([
+        {
+          '$lookup': {
+            'from': 'estudiantes', 
+            'localField': 'estudiante', 
+            'foreignField': '_id', 
+            'as': 'estudiante'
           }
-      }
-    ]).exec();
+        }, {
+          '$unwind': {
+            'path': '$estudiante'
+          }
+        }, {
+          '$match': {
+            '$and': [{
+                        'periodo': periodo_activo,
+                        'curso': new mongoose.Types.ObjectId( idCurso )
+                    }]
+          }
+        }, 
+        {
+          '$sort': {
+            'estudiante.apellidos': 1
+          }
+        },
+        {
+            '$project': {
+              'estudiante._id': 1,
+              'estudiante.cedula': 1,
+              'estudiante.apellidos': 1,
+              'estudiante.nombres': 1,
+              'estudiante.fecha_nacimiento': 1,
+              'estudiante.sexo': 1,
+            }
+        }
+      ]).exec();
+  
+      let estudiantes = [];
+  
+      matriculas.map(
+        matricula => {
+          estudiantes.push({
+            id: matricula.estudiante._id,
+            cedula: matricula.estudiante.cedula,
+            nombre_completo: `${matricula.estudiante.apellidos} ${matricula.estudiante.nombres}`,
+            fecha_nacimiento: matricula.estudiante.fecha_nacimiento,
+            sexo: matricula.estudiante.sexo
+          });
+        }
+      );
+  
+      return {
+        curso: idCurso,
+        cantidad: estudiantes.length,
+        estudiantes
+      };
 
-    return matriculas;
+    } catch (error) {
+      this.handleDbErrorsOnMongo(error);
+    }
+
 
   }
 
