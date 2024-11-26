@@ -23,10 +23,18 @@ export class MatriculaController {
     return this.matriculaService.findAll(paginationDto);
   }
 
+  // presentación de listado de estudiantes matriculados en un curso y periodo determinado
   @Auth()
-  @Get('listado/:id')
-  loadMatriculaCurso( @Param('id') id: string ) {
-    return this.matriculaService.loadMatriculaCurso(id);
+  @Get('curso/:periodo/:id')
+  loadMatriculaCurso( @Param('id') id: string, @Param('periodo') periodo: string ) {
+    return this.matriculaService.loadMatriculaCurso(id, periodo);
+  }
+
+  // presentación de datos de la matricula de un estudiante
+  @Auth()
+  @Get('estudiante/:periodo/:id')
+  loadMatriculaEstudiante( @Param('id') id: string, @Param('periodo') periodo: string ) {
+    return this.matriculaService.loadMatriculaEstudiante(id, periodo);
   }
 
   @Get(':id')

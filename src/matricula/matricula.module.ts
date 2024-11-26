@@ -6,6 +6,7 @@ import { Matricula, MatriculaSchema } from './schemas/matricula.schema';
 import { MatriculaController } from './matricula.controller';
 import { MatriculaService } from './matricula.service';
 import { ConfigModule } from '@nestjs/config';
+import { Curso, CursoSchema } from 'src/curso/schemas/curso.schema';
 
 @Module({
   controllers: [MatriculaController],
@@ -16,6 +17,9 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forFeature([{
       name: Matricula.name,
       schema: MatriculaSchema
+    },{
+      name: Curso.name,
+      schema: CursoSchema
     }])
   ]
 })
