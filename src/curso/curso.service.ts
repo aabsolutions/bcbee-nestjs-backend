@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException, Query } from '@nestjs/common';
 import { CreateCursoDto } from './dto/create-curso.dto';
 import { UpdateCursoDto } from './dto/update-curso.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -7,12 +7,12 @@ import { Curso } from './schemas/curso.schema';
 import { User } from 'src/auth/schemas/user.schema';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { validarMongoID } from 'src/common/middlewares/validar-mongoid';
+import { query } from 'express';
 
 @Injectable()
 export class CursoService {
   
   private logger = new Logger();
-
 
   constructor( @InjectModel('Curso') private readonly cursoModel: Model<Curso> ){}
 
@@ -42,6 +42,22 @@ export class CursoService {
     
   }
 
+  async findManyBy( filtros: any, paginationDto: PaginationDto){
+
+    let query: any = {};
+
+    if (filtros.nivel) query.nivel = filtros.nivel;
+    if (filtros.jornada) query.jornada = filtros.jornada;
+    if (filtros.especialidad) query.especialidad = filtros.especialidad;
+         
+    const cursos = await this.cursoModel.find( query, {});
+    
+    return cursos;
+
+  }
+
+  
+
   async findAll( paginationDto: PaginationDto) {
 
     const { limit = 10, offset = 0 } = paginationDto;
@@ -62,7 +78,6 @@ export class CursoService {
     return bdCurso;  
   
   }
-
 
   async update(id: string, updateCursoDto: UpdateCursoDto, user: User) {
 

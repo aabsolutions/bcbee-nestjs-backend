@@ -6,6 +6,7 @@ import { Auth, GetUser } from 'src/auth/decorators';
 import { User } from 'src/auth/schemas/user.schema';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { ValidRoles } from 'src/auth/interfaces';
+import { filter } from 'rxjs';
 
 @Controller('curso')
 export class CursoController {
@@ -18,6 +19,11 @@ export class CursoController {
     return this.cursoService.create(createCursoDto, user);
   }
 
+  @Auth()
+  @Get('/filter')
+  findManyBy( @Query() paginationDto: PaginationDto, @Body() filter: string ) {
+    return this.cursoService.findManyBy(filter, paginationDto);
+  }
   @Auth()
   @Get()
   findAll( @Query() paginationDto: PaginationDto ) {
