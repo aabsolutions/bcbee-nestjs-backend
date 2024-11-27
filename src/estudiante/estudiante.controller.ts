@@ -21,19 +21,19 @@ export class EstudianteController {
     description: 'Product was created',
     type: Estudiante
   })
-  @Auth()
+  @Auth(ValidRoles.user)
   create(@Body() createEstudianteDto: CreateEstudianteDto,
   @GetUser() user: User) {
     return this.estudianteService.create(createEstudianteDto, user);
   }
 
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get()
   findAll( @Query() paginationDto:PaginationDto ) {
     return this.estudianteService.findAll( paginationDto );
   }
 
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.estudianteService.findOne(id);

@@ -67,3 +67,17 @@ export class User extends Document{
 }
 
 export const UserSchema = SchemaFactory.createForClass( User );
+
+UserSchema.pre('save', function(next) {
+    
+    const user = this;
+    this.fullName = this.fullName.trim().toLowerCase();
+    next();
+});
+
+UserSchema.pre('findOneAndUpdate', function(next) {
+    const update: any = this.getUpdate();
+    if( update.fullName ) update.fullName = update.fullName.trim().toLowerCase();
+    next();
+});
+

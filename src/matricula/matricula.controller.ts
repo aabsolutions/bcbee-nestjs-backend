@@ -11,28 +11,28 @@ import { ValidRoles } from 'src/auth/interfaces';
 export class MatriculaController {
   constructor(private readonly matriculaService: MatriculaService) {}
 
-  @Auth()
+  @Auth(ValidRoles.user)
   @Post(ValidRoles.admin)
   create(@Body() createMatriculaDto: CreateMatriculaDto, 
   @GetUser() user: User) {
     return this.matriculaService.create(createMatriculaDto, user);
   }
 
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get()
   findAll( @Query() paginationDto: PaginationDto) {
     return this.matriculaService.findAll(paginationDto);
   }
 
   // presentación de listado de estudiantes matriculados en un curso y periodo determinado
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get('curso/:periodo/:id')
   loadMatriculaCurso( @Param('id') id: string, @Param('periodo') periodo: string ) {
     return this.matriculaService.loadMatriculaCurso(id, periodo);
   }
 
   // presentación de datos de la matricula de un estudiante
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get('estudiante/:periodo/:id')
   loadMatriculaEstudiante( @Param('id') id: string, 
   @Param('periodo') periodo: string ) {

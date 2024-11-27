@@ -6,6 +6,7 @@ import { CommonModule } from './common/common.module';
 import { EstudianteModule } from './estudiante/estudiante.module';
 import { CursoModule } from './curso/curso.module';
 import { MatriculaModule } from './matricula/matricula.module';
+import { DocenteModule } from './docente/docente.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { MatriculaModule } from './matricula/matricula.module';
     CommonModule,
     EstudianteModule,
     CursoModule,
-    MatriculaModule
+    MatriculaModule,
+    DocenteModule
   ],
 })
 export class AppModule {}

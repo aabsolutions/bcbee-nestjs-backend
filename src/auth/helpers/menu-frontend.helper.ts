@@ -33,8 +33,6 @@ export const getMenuFrontEnd = ( roles ) => {
           }
     ]
 
-    console.log(roles);
-
     if( roles.includes('admin') ){
         menu[0].submenu.push({ titulo: 'Usuarios', url: 'usuarios'});
         menu[0].submenu.push({ titulo: 'Registro', url: 'registro'});

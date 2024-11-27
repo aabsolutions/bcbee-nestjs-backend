@@ -3,11 +3,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 
 import { Auth, GetUser } from 'src/auth/decorators';
 import { CreateCursoDto, UpdateCursoDto } from './dto';
+import { Curso } from './schemas/curso.schema';
 import { CursoService } from './curso.service';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { User } from 'src/auth/schemas/user.schema';
 import { ValidRoles } from 'src/auth/interfaces';
-import { Curso } from './schemas/curso.schema';
 
 @ApiTags('curso')
 @Controller('curso')
@@ -18,7 +18,7 @@ export class CursoController {
   @ApiAcceptedResponse({
     description: 'The curso has been successfully created.'
   })
-  @Auth()
+  @Auth(ValidRoles.user)
   @Post()
   create(@Body() createCursoDto: CreateCursoDto,
   @GetUser() user: User) {
@@ -31,21 +31,21 @@ export class CursoController {
     description: 'Filter for curso path',
     type: [Curso],
   })
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get('/filter')
   findManyBy( @Query() paginationDto: PaginationDto, @Body() filter: string ) {
     return this.cursoService.findManyBy(filter, paginationDto);
   }
 
   @ApiOperation({ summary: 'Get all cursos' })
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get()
   findAll( @Query() paginationDto: PaginationDto ) {
     return this.cursoService.findAll(paginationDto);
   }
 
   @ApiOperation({ summary: 'Get one curso' })
-  @Auth()
+  @Auth(ValidRoles.user)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.cursoService.findOne(id);

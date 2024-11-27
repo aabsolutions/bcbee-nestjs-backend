@@ -1,15 +1,17 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import { ApiProperty } from "@nestjs/swagger";
-import * as mongoose from 'mongoose';
 import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
+import * as mongoose from 'mongoose';
+
 import { User } from "src/auth/schemas/user.schema";
+import { MaxLength } from 'class-validator';
 
 @Schema({timestamps: true})
-export class Estudiante extends Document{
+export class Docente extends Document{
 
     @ApiProperty({
         type: String,
-        description: `The xxx of estudiante`,
+        description: `The xxx of docente`,
         maxLength: 10
     })
     @Prop({
@@ -22,7 +24,7 @@ export class Estudiante extends Document{
 
     @ApiProperty({
         type: String,
-        description: `The xxx of estudiante`
+        description: `The xxx of docente`
     })
     @Prop({
         type: String,
@@ -32,7 +34,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of estudiante`
+        description: `The xxx of docente`
     })
     @Prop({
         type: String,
@@ -42,7 +44,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: Date,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: Date
@@ -51,7 +53,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: Number,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: Number
@@ -60,7 +62,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: String
@@ -69,7 +71,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: String
@@ -78,25 +80,47 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: String
     })
     email: string;
-    
+
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: String
     })
-    celular: string;
+    email_institucional: string;
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `The xxx of docente`,
+        minLength: 10
+    })
+    @Prop({
+        type: String,
+        minlength: 10
+    })
+    celular: string;
+
+    @ApiProperty({
+        type: String,
+        description: `The xxx of docente`,
+        minLength: 10
+    })
+    @Prop({
+        type: String,
+        minlength: 10
+    })
+    celular_urg: string;
+    
+    @ApiProperty({
+        type: String,
+        description: `The xxx of docente`
     })
     @Prop({
         type: String
@@ -105,7 +129,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: Boolean,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: Boolean,
@@ -115,7 +139,7 @@ export class Estudiante extends Document{
 
     @ApiProperty({
         type: User,
-        description: `The xxx of `
+        description: `The xxx of docente`
     })
     @Prop({
         type: mongoose.Schema.Types.ObjectId,
@@ -124,4 +148,4 @@ export class Estudiante extends Document{
     usuario: string;
 }
 
-export const EstudianteSchema = SchemaFactory.createForClass( Estudiante );
+export const DocenteSchema = SchemaFactory.createForClass( Docente );
