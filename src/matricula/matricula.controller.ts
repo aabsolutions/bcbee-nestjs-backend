@@ -5,13 +5,14 @@ import { UpdateMatriculaDto } from './dto/update-matricula.dto';
 import { Auth, GetUser } from 'src/auth/decorators';
 import { User } from 'src/auth/schemas/user.schema';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('matricula')
 export class MatriculaController {
   constructor(private readonly matriculaService: MatriculaService) {}
 
   @Auth()
-  @Post()
+  @Post(ValidRoles.admin)
   create(@Body() createMatriculaDto: CreateMatriculaDto, 
   @GetUser() user: User) {
     return this.matriculaService.create(createMatriculaDto, user);
@@ -33,7 +34,8 @@ export class MatriculaController {
   // presentación de datos de la matricula de un estudiante
   @Auth()
   @Get('estudiante/:periodo/:id')
-  loadMatriculaEstudiante( @Param('id') id: string, @Param('periodo') periodo: string ) {
+  loadMatriculaEstudiante( @Param('id') id: string, 
+  @Param('periodo') periodo: string ) {
     return this.matriculaService.loadMatriculaEstudiante(id, periodo);
   }
 
@@ -42,9 +44,11 @@ export class MatriculaController {
     return this.matriculaService.findOne(id);
   }
 
-  @Auth()
+  @Auth(ValidRoles.admin)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMatriculaDto: UpdateMatriculaDto, @GetUser() user: User) {
+  update(@Param('id') id: string, 
+  @Body() updateMatriculaDto: UpdateMatriculaDto, 
+  @GetUser() user: User) {
     return this.matriculaService.update(id, updateMatriculaDto, user);
   }
 

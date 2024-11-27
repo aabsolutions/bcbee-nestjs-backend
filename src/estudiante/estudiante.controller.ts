@@ -39,7 +39,7 @@ export class EstudianteController {
     return this.estudianteService.findOne(id);
   }
 
-  @Auth()
+  @Auth(ValidRoles.admin)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEstudianteDto: UpdateEstudianteDto,
   @GetUser() user: User) {
