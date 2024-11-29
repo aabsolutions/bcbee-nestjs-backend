@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiAcceptedResponse, ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { Auth } from './decorators';
+import { Auth, GetUser } from './decorators';
 import { AuthService } from './auth.service';
 import { LoginUserDto, CreateUserDto, UpdateUserDto } from './dto';
 import { ValidRoles } from './interfaces';
@@ -33,11 +33,19 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Get all users' })
-  @Auth(ValidRoles.admin, ValidRoles.user)
   @Get()
   findAll() {
     return this.authService.findAll();
   }
+
+  @Get('check-status')
+  @Auth()
+  checkAuthStatus(
+    @GetUser() user: User
+  ) {
+    return this.authService.checkAuthStatus( user );
+  }
+
 
   @ApiOperation({ summary: 'Get one user' })
   @Get(':id')

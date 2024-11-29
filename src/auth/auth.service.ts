@@ -36,7 +36,7 @@ export class AuthService {
       await newUser.save();
 
       return {
-        newUser,
+        usuario: newUser,
         token: this.getJwtToken({ id: newUser.id })
       }  
       
@@ -64,7 +64,7 @@ export class AuthService {
       throw new UnauthorizedException(`Cretendials are not valid (password)`);
 
     return {
-      user: loggedUser,
+      usuario: loggedUser,
       token: this.getJwtToken({ id: loggedUser.id }),
       menu: getMenuFrontEnd(loggedUser.roles)
     }
@@ -84,7 +84,9 @@ export class AuthService {
     try {
   
       const updatedUser = await this.userModel.findByIdAndUpdate( id , updateUserDto , { new: true });
-      return updatedUser;
+      return {
+        usuario: updatedUser
+      };
       
     } catch (error) {
 
@@ -113,10 +115,12 @@ export class AuthService {
   }
 
   
-  async checkStatus( user: any ){
+  async checkAuthStatus( usuario: any ){
     return {
-      user,
-      token: this.getJwtToken({ id: user._id })
+      usuario,
+      token: this.getJwtToken({ id: usuario._id }),
+      menu: getMenuFrontEnd(usuario.roles)
+
     }
   }
 
