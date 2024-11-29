@@ -6,13 +6,15 @@ import { Auth, GetUser } from 'src/auth/decorators';
 import { User } from 'src/auth/schemas/user.schema';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { ValidRoles } from 'src/auth/interfaces';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Matricula')
 @Controller('matricula')
 export class MatriculaController {
   constructor(private readonly matriculaService: MatriculaService) {}
 
-  @Auth(ValidRoles.user)
-  @Post(ValidRoles.admin)
+  @Auth(ValidRoles.user, ValidRoles.admin)
+  @Post()
   create(@Body() createMatriculaDto: CreateMatriculaDto, 
   @GetUser() user: User) {
     return this.matriculaService.create(createMatriculaDto, user);

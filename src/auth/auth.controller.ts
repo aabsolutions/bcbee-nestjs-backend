@@ -7,7 +7,7 @@ import { LoginUserDto, CreateUserDto, UpdateUserDto } from './dto';
 import { ValidRoles } from './interfaces';
 import { User } from './schemas/user.schema';
 
-@ApiTags('auth')
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

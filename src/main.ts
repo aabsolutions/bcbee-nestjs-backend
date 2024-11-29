@@ -19,8 +19,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Teslo RESTful API')
-    .setDescription('Teslo Shop API')
+    .setTitle('UEEE RESTful API')
+    .setDescription('UE El Empalme API')
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);

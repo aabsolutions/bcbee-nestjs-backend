@@ -9,7 +9,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { User } from 'src/auth/schemas/user.schema';
 import { ValidRoles } from 'src/auth/interfaces';
 
-@ApiTags('curso')
+@ApiTags('Curso')
 @Controller('curso')
 export class CursoController {
   constructor(private readonly cursoService: CursoService) {}

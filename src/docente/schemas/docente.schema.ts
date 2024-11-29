@@ -149,3 +149,29 @@ export class Docente extends Document{
 }
 
 export const DocenteSchema = SchemaFactory.createForClass( Docente );
+
+DocenteSchema.pre('save', function(next) {
+    
+    const docente = this;
+    if( docente.nombres ) docente.nombres = docente.nombres.trim().toLowerCase();
+    if( docente.apellidos ) docente.apellidos = docente.apellidos.trim().toLowerCase();
+    if( docente.direccion ) docente.direccion = docente.direccion.trim().toLowerCase();
+    if( docente.ciudad ) docente.ciudad = docente.ciudad.trim().toLowerCase();
+    if( docente.email ) docente.email = docente.email.trim().toLowerCase();
+    if( docente.email_institucional ) docente.email_institucional = docente.email_institucional.trim().toLowerCase();
+    next();
+    
+});
+
+DocenteSchema.pre('findOneAndUpdate', function(next) {
+
+    const docente: any = this.getUpdate();
+    if( docente.nombres ) docente.nombres = docente.nombres.trim().toLowerCase();
+    if( docente.apellidos ) docente.apellidos = docente.apellidos.trim().toLowerCase();
+    if( docente.direccion ) docente.direccion = docente.direccion.trim().toLowerCase();
+    if( docente.ciudad ) docente.ciudad = docente.ciudad.trim().toLowerCase();
+    if( docente.email ) docente.email = docente.email.trim().toLowerCase();
+    if( docente.email_institucional ) docente.email_institucional = docente.email_institucional.trim().toLowerCase();
+    next();
+
+});

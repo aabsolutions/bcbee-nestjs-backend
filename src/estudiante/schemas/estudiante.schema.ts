@@ -125,3 +125,24 @@ export class Estudiante extends Document{
 }
 
 export const EstudianteSchema = SchemaFactory.createForClass( Estudiante );
+
+EstudianteSchema.pre('save', function(next) {
+    
+    this.nombres             = this.nombres.trim().toLowerCase();
+    this.apellidos           = this.apellidos.trim().toLowerCase();
+    this.direccion           = this.direccion.trim().toLowerCase();
+    this.ciudad              = this.ciudad.trim().toLowerCase();
+    this.email               = this.email.trim().toLowerCase();
+    next();
+    
+});
+
+EstudianteSchema.pre('findOneAndUpdate', function(next) {
+    const estudiante: any = this.getUpdate();
+    if( estudiante.nombres ) estudiante.nombres = estudiante.nombres.trim().toLowerCase();
+    if( estudiante.apellidos ) estudiante.apellidos = estudiante.apellidos.trim().toLowerCase();
+    if( estudiante.direccion ) estudiante.direccion = estudiante.direccion.trim().toLowerCase();
+    if( estudiante.ciudad ) estudiante.ciudad = estudiante.ciudad.trim().toLowerCase();
+    if( estudiante.email ) estudiante.email = estudiante.email.trim().toLowerCase();
+    next();
+});

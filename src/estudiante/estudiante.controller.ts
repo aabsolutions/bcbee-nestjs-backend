@@ -10,7 +10,7 @@ import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
 import { User } from 'src/auth/schemas/user.schema';
 import { ValidRoles } from 'src/auth/interfaces';
 
-@ApiTags('Estudiantes')
+@ApiTags('Estudiante')
 @Controller('estudiante')
 export class EstudianteController {
   constructor(private readonly estudianteService: EstudianteService) {}
