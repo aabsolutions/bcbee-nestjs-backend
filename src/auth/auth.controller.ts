@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiAcceptedResponse, ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiAcceptedResponse, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { Auth, GetUser } from './decorators';
 import { AuthService } from './auth.service';
@@ -39,13 +39,12 @@ export class AuthController {
   }
 
   @Get('renew')
-  @Auth()
+  @Auth(ValidRoles.user)
   checkAuthStatus(
     @GetUser() user: User
   ) {
     return this.authService.checkAuthStatus( user );
   }
-
 
   @ApiOperation({ summary: 'Get one user' })
   @Get(':id')
