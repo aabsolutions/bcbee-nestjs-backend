@@ -38,7 +38,7 @@ export class AuthController {
     return this.authService.findAll();
   }
 
-  @Get('check-status')
+  @Get('renew')
   @Auth()
   checkAuthStatus(
     @GetUser() user: User
