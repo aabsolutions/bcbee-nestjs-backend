@@ -19,8 +19,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('UEEE RESTful API')
-    .setDescription('UE El Empalme API')
+    .setTitle('BCBEE RESTful API')
+    .setDescription('Benemérito Cuerpo de Bomberos del Cantón El Empalme API')
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);

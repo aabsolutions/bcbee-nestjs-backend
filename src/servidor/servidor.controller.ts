@@ -2,29 +2,29 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Auth, GetUser } from 'src/auth/decorators';
-import { CreateEstudianteDto } from './dto/create-estudiante.dto';
-import { Estudiante } from './schemas/estudiante.schema';
-import { EstudianteService } from './estudiante.service';
+import { CreateServidorDto } from './dto/create-servidor.dto';
+import { Servidor } from './schemas/servidor.schema';
+import { ServidorService } from './servidor.service';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
-import { UpdateEstudianteDto } from './dto/update-estudiante.dto';
+import { UpdateServidorDto } from './dto/update-servidor.dto';
 import { User } from 'src/auth/schemas/user.schema';
 import { ValidRoles } from 'src/auth/interfaces';
 
-@ApiTags('Estudiante')
-@Controller('estudiante')
-export class EstudianteController {
-  constructor(private readonly estudianteService: EstudianteService) {}
+@ApiTags('Servidor')
+@Controller('servidor')
+export class ServidorController {
+  constructor(private readonly estudianteService: ServidorService) {}
 
   @Post()
   @ApiResponse({
     status: 201,
-    description: 'Product was created',
-    type: Estudiante
+    description: 'Servidor was created',
+    type: Servidor
   })
   @Auth(ValidRoles.user)
-  create(@Body() createEstudianteDto: CreateEstudianteDto,
+  create(@Body() createServidorDto: CreateServidorDto,
   @GetUser() user: User) {
-    return this.estudianteService.create(createEstudianteDto, user);
+    return this.estudianteService.create(createServidorDto, user);
   }
 
   @Auth(ValidRoles.user)
@@ -41,9 +41,9 @@ export class EstudianteController {
 
   @Auth(ValidRoles.admin)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEstudianteDto: UpdateEstudianteDto,
+  update(@Param('id') id: string, @Body() updateServidorDto: UpdateServidorDto,
   @GetUser() user: User) {
-    return this.estudianteService.update(id, updateEstudianteDto, user);
+    return this.estudianteService.update(id, updateServidorDto, user);
   }
 
   @Auth(ValidRoles.admin)

@@ -5,11 +5,11 @@ import { Document } from "mongoose";
 import { User } from "src/auth/schemas/user.schema";
 
 @Schema({timestamps: true})
-export class Estudiante extends Document{
+export class Servidor extends Document{
 
     @ApiProperty({
         type: String,
-        description: `The xxx of estudiante`,
+        description: `La cédula de servidor`,
         maxLength: 10
     })
     @Prop({
@@ -22,7 +22,7 @@ export class Estudiante extends Document{
 
     @ApiProperty({
         type: String,
-        description: `The xxx of estudiante`
+        description: `Los apellidos de servidor`
     })
     @Prop({
         type: String,
@@ -32,7 +32,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of estudiante`
+        description: `Los nombres de servidor`
     })
     @Prop({
         type: String,
@@ -42,7 +42,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: Date,
-        description: `The xxx of `
+        description: `La fecha de nacimiento de servidor`
     })
     @Prop({
         type: Date
@@ -51,25 +51,16 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: Number,
-        description: `The xxx of `
+        description: `El sexo de servidor`
     })
     @Prop({
         type: Number
     })
     sexo: number;
-    
+        
     @ApiProperty({
         type: String,
-        description: `The xxx of `
-    })
-    @Prop({
-        type: String
-    })
-    ciudad: string;
-    
-    @ApiProperty({
-        type: String,
-        description: `The xxx of `
+        description: `La dirección de servidor`
     })
     @Prop({
         type: String
@@ -78,7 +69,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `El email de servidor`
     })
     @Prop({
         type: String
@@ -87,7 +78,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `El celular de servidor`
     })
     @Prop({
         type: String
@@ -96,7 +87,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: String,
-        description: `The xxx of `
+        description: `La imagen de servidor`
     })
     @Prop({
         type: String
@@ -105,7 +96,7 @@ export class Estudiante extends Document{
     
     @ApiProperty({
         type: Boolean,
-        description: `The xxx of `
+        description: `El estado de servidor`
     })
     @Prop({
         type: Boolean,
@@ -115,7 +106,7 @@ export class Estudiante extends Document{
 
     @ApiProperty({
         type: User,
-        description: `The xxx of `
+        description: `El usuario de creación/modificación de servidor`
     })
     @Prop({
         type: mongoose.Schema.Types.ObjectId,
@@ -124,25 +115,21 @@ export class Estudiante extends Document{
     usuario: string;
 }
 
-export const EstudianteSchema = SchemaFactory.createForClass( Estudiante );
+export const ServidorSchema = SchemaFactory.createForClass( Servidor );
 
-EstudianteSchema.pre('save', function(next) {
+ServidorSchema.pre('save', function(next) {
     
     this.nombres             = this.nombres.trim().toLowerCase();
     this.apellidos           = this.apellidos.trim().toLowerCase();
-    this.direccion           = this.direccion.trim().toLowerCase();
-    this.ciudad              = this.ciudad.trim().toLowerCase();
-    this.email               = this.email.trim().toLowerCase();
     next();
     
 });
 
-EstudianteSchema.pre('findOneAndUpdate', function(next) {
-    const estudiante: any = this.getUpdate();
-    if( estudiante.nombres ) estudiante.nombres = estudiante.nombres.trim().toLowerCase();
-    if( estudiante.apellidos ) estudiante.apellidos = estudiante.apellidos.trim().toLowerCase();
-    if( estudiante.direccion ) estudiante.direccion = estudiante.direccion.trim().toLowerCase();
-    if( estudiante.ciudad ) estudiante.ciudad = estudiante.ciudad.trim().toLowerCase();
-    if( estudiante.email ) estudiante.email = estudiante.email.trim().toLowerCase();
+ServidorSchema.pre('findOneAndUpdate', function(next) {
+    const servidor: any = this.getUpdate();
+    if( servidor.nombres ) servidor.nombres = servidor.nombres.trim().toLowerCase();
+    if( servidor.apellidos ) servidor.apellidos = servidor.apellidos.trim().toLowerCase();
+    if( servidor.direccion ) servidor.direccion = servidor.direccion.trim().toLowerCase();
+    if( servidor.email ) servidor.email = servidor.email.trim().toLowerCase();
     next();
 });

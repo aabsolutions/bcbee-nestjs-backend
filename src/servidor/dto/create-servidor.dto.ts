@@ -1,8 +1,7 @@
-
 import { ApiProperty } from "@nestjs/swagger";
 import { IsBoolean, IsEmail, IsMongoId, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 
-export class CreateDocenteDto {
+export class CreateServidorDto {
 
     @ApiProperty()
     @IsString()
@@ -30,11 +29,6 @@ export class CreateDocenteDto {
     @ApiProperty()
     @IsString()
     @IsOptional()
-    ciudad: string;
-
-    @ApiProperty()
-    @IsString()
-    @IsOptional()
     direccion: string;
 
     @ApiProperty()
@@ -43,19 +37,9 @@ export class CreateDocenteDto {
     email: string;
 
     @ApiProperty()
-    @IsEmail()
-    @IsOptional()
-    email_institucional: string;
-
-    @ApiProperty()
     @IsString()
     @IsOptional()
     celular: string;
-
-    @ApiProperty()
-    @IsString()
-    @IsOptional()
-    celular_urg: string;
 
     @ApiProperty()
     @IsString()

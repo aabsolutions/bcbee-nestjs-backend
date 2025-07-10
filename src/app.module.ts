@@ -3,10 +3,7 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { CommonModule } from './common/common.module';
-import { EstudianteModule } from './estudiante/estudiante.module';
-import { CursoModule } from './curso/curso.module';
-import { MatriculaModule } from './matricula/matricula.module';
-import { DocenteModule } from './docente/docente.module';
+import { ServidorModule } from './servidor/servidor.module';
 
 @Module({
   imports: [
@@ -14,10 +11,7 @@ import { DocenteModule } from './docente/docente.module';
     MongooseModule.forRoot(process.env.DB_HOST),
     AuthModule,
     CommonModule,
-    EstudianteModule,
-    CursoModule,
-    MatriculaModule,
-    DocenteModule
+    ServidorModule
   ],
 })
 export class AppModule {}

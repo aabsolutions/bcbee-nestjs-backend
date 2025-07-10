@@ -32,6 +32,9 @@ export class AuthController {
     return this.authService.create(createUserDto);
   }
 
+  
+
+
   @ApiOperation({ summary: 'Get all users' })
   @Get()
   findAll() {
